@@ -1,0 +1,62 @@
+<svg width="500" height="700" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  
+  <!-- Title -->
+  <text x="27%" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#000000">Nutrition Information</text>
+  
+  <!-- Section: Per 100g -->
+  <text x="20" y="80" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000">Per 100g (Typical Values):</text>
+  <text x="40" y="110" font-family="Arial, sans-serif" font-size="16" fill="#000000">Energy: 52 kcal</text>
+  <text x="40" y="130" font-family="Arial, sans-serif" font-size="16" fill="#000000">Fat: 0.2g</text>
+  <text x="60" y="150" font-family="Arial, sans-serif" font-size="16" fill="#000000">of which saturates: 0.03g</text>
+  <text x="40" y="170" font-family="Arial, sans-serif" font-size="16" fill="#000000">Carbohydrate: 14g</text>
+  <text x="60" y="190" font-family="Arial, sans-serif" font-size="16" fill="#000000">of which sugars: 10g</text>
+  <text x="40" y="210" font-family="Arial, sans-serif" font-size="16" fill="#000000">Fibre: 2.4g</text>
+  <text x="40" y="230" font-family="Arial, sans-serif" font-size="16" fill="#000000">Protein: 0.3g</text>
+  <text x="40" y="250" font-family="Arial, sans-serif" font-size="16" fill="#000000">Salt: 0.01g</text>
+  
+  <!-- Section: Per Apple -->
+  <text x="20" y="290" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000">Per Apple (Approx. 150g):</text>
+  <text x="40" y="320" font-family="Arial, sans-serif" font-size="16" fill="#000000">Energy: 78 kcal</text>
+  <text x="40" y="340" font-family="Arial, sans-serif" font-size="16" fill="#000000">Fat: 0.3g</text>
+  <text x="60" y="360" font-family="Arial, sans-serif" font-size="16" fill="#000000">of which saturates: 0.05g</text>
+  <text x="40" y="380" font-family="Arial, sans-serif" font-size="16" fill="#000000">Carbohydrate: 21g</text>
+  <text x="60" y="400" font-family="Arial, sans-serif" font-size="16" fill="#000000">of which sugars: 15g</text>
+  <text x="40" y="420" font-family="Arial, sans-serif" font-size="16" fill="#000000">Fibre: 3.6g</text>
+  <text x="40" y="440" font-family="Arial, sans-serif" font-size="16" fill="#000000">Protein: 0.45g</text>
+  <text x="40" y="460" font-family="Arial, sans-serif" font-size="16" fill="#000000">Salt: 0.02g</text>
+  
+  <!-- Section: Ingredients -->
+  <text x="20" y="500" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000">Ingredients:</text>
+  <text x="40" y="530" font-family="Arial, sans-serif" font-size="16" fill="#000000">Apples (100%)</text>
+  
+  <!-- Section: Allergen Information -->
+  <text x="20" y="570" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000">Allergen Information:</text>
+  <text x="40" y="600" font-family="Arial, sans-serif" font-size="16" fill="#000000">None</text>
+  
+  <!-- Section: Storage Instructions -->
+  <text x="20" y="640" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000">Storage Instructions:</text>
+  <text x="40" y="670" font-family="Arial, sans-serif" font-size="16" fill="#000000">Keep in a cool, dry place.</text>
+  <text x="40" y="690" font-family="Arial, sans-serif" font-size="16" fill="#000000">Once opened, store in an airtight container and consume within 3 days.</text>
+  
+  <!-- Section: Origin -->
+  <text x="20" y="730" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000">Origin:</text>
+  <text x="40" y="760" font-family="Arial, sans-serif" font-size="16" fill="#000000">Country of Origin: United Kingdom</text>
+  
+  <!-- Section: Additional Information -->
+  <text x="20" y="800" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000">Additional Information:</text>
+  <text x="40" y="830" font-family="Arial, sans-serif" font-size="16" fill="#000000">Suitable for vegetarians and vegans.</text>
+  <text x="40" y="850" font-family="Arial, sans-serif" font-size="16" fill="#000000">Wash before use.</text>
+  
+  <!-- Section: Pack Information -->
+  <text x="20" y="890" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000">Pack Information:</text>
+  <text x="40" y="920" font-family="Arial, sans-serif" font-size="16" fill="#000000">Pack Size: 3 apples (approx. 450g)</text>
+  <text x="40" y="940" font-family="Arial, sans-serif" font-size="16" fill="#000000">Best Before: [Insert Date]</text>
+  
+  <!-- Section: Producer Information -->
+  <text x="20" y="980" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000">Producer Information:</text>
+  <text x="40" y="1010" font-family="Arial, sans-serif" font-size="16" fill="#000000">Packed for: [Company Name]</text>
+  <text x="40" y="1030" font-family="Arial, sans-serif" font-size="16" fill="#000000">Address: [Company Address]</text>
+  <text x="40" y="1050" font-family="Arial, sans-serif" font-size="16" fill="#000000">Customer Service: [Phone Number]</text>
+</svg>
