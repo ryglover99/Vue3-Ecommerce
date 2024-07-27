@@ -3,7 +3,7 @@
     <div class="upper-navbar">
       <div class="upper-navbar-container">
         <div class="logo" @click="pushHome()" style="cursor: pointer">
-          <img src="@/assets/img/logo.svg" />
+          <img src="@/assets/img/green-go-logo.png" />
         </div>
         <div class="search">
           <form class="d-flex" role="search">

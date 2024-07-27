@@ -8,8 +8,8 @@ import ProductsService from '@/services/ProductsService'
 import type IProduct from '@/interfaces/IProduct'
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import image1 from '@/assets/img/person.jpg'
-import image2 from '@/assets/img/veg.jpg'
+import image1 from '@/assets/img/green-go-show2.png'
+import image2 from '@/assets/img/green-go-show3.png'
 
 const productsService = new ProductsService()
 
@@ -23,11 +23,10 @@ export default defineComponent({
     const productsInEachCategory: IProduct[] = []
 
     const images = [
-      { id: 1, url: image1, overlayText: 'Skip the queue and order directly from your home!' },
+      { id: 1, url: image1 },
       {
         id: 2,
-        url: image2,
-        overlayText: 'With thousands of fresh produce, you are bound to find your next go-to meal!'
+        url: image2
       }
     ]
     return {
@@ -95,7 +94,7 @@ export default defineComponent({
           <div class="carousel__item">
             <div class="caro-div">
               <img :src="image.url" />
-              <div class="overlay d-flex flex-column">
+              <div v-if="image.overlayText != null" class="overlay d-flex flex-column">
                 <h2>{{ image.overlayText }}</h2>
                 <button class="btn btn-success mt-4">Explore</button>
               </div>
