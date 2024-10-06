@@ -11,4 +11,8 @@ export default class HelperMethods {
 
     return newTextArray.join(' ')
   }
+
+  public scrollToTop() {
+    window.scroll(0, 0)
+  }
 }

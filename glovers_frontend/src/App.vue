@@ -1,5 +1,5 @@
 <template>
-  <header class="d-flex flex-column h-auto">
+  <header class="d-flex flex-column">
     <div
       class="w-100 d-flex align-items-center mb-4 text-secondary"
       style="height: 35px; background-color: rgba(0, 0, 0, 0.16)"
@@ -26,17 +26,17 @@
       <RouterView :toggleBasketSlideEvent="toggleBasketSlide" />
     </div>
   </main>
-  <footer
-    class="d-flex w-100 flex-wrap justify-content-between align-items-center py-3 mb-4 border-top"
-    style="margin-top: 100px"
-  >
+  <footer class="d-flex w-100 flex-wrap justify-content-between align-items-center py-4">
     <div class="col-md-4 d-flex align-items-center">
       <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
         <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
       </a>
-      <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Company, Inc</span>
+      <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Green Go, Inc</span>
     </div>
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex"></ul>
+    <div class="logo" @click="pushHome()" style="cursor: pointer">
+      <img src="@/assets/img/green-go-logo.png" width="100" class="mx-4" />
+    </div>
   </footer>
 </template>
 
@@ -45,12 +45,18 @@ import { RouterLink, RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import BasketSlideOut from './components/BasketSlideOut.vue'
 import { defineComponent } from 'vue'
+import ProductsService from './services/ProductsService'
+import { useSharedStore } from '@/store/SharedStore'
+
+const productsService = new ProductsService()
 
 export default defineComponent({
   data() {
+    var sharedStore = useSharedStore()
     const toggleBasketSlide: boolean = false
     return {
-      toggleBasketSlide
+      toggleBasketSlide,
+      sharedStore
     }
   },
   components: {
@@ -58,32 +64,43 @@ export default defineComponent({
     BasketSlideOut
   },
   computed: {},
+  watch: {},
   methods: {
     toggleBasketSlideCallback() {
-      console.log('hit')
       this.toggleBasketSlide = !this.toggleBasketSlide
-      console.log(this.toggleBasketSlide)
     },
     hideBasket() {
       this.toggleBasketSlide = false
+    },
+    async populateProductsInStore() {
+      let prods = await productsService.getAllProducts()
+      this.sharedStore.populateProductList(prods)
+    },
+    async initialize() {
+      await Promise.all([this.populateProductsInStore()])
     }
   },
-  watch: {}
+  async mounted() {
+    await this.initialize()
+    console.log(this.sharedStore.getProducts)
+  }
 })
 </script>
 
 <style>
+body {
+  height: 100%;
+  background-color: rgba(247, 247, 243, 0.902) !important;
+}
 main {
   min-height: 100vh;
-  margin-top: 100px;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 .nav-wrap {
-  padding-top: 20px;
   padding-left: 8%;
   padding-right: 12%;
-  position: fixed;
   top: 0;
-  background-color: white;
   width: 100%;
   z-index: 999;
 }
@@ -100,11 +117,20 @@ input[type='reset'] {
 }
 
 header {
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
   display: flex;
   align-items: end;
   width: 100%;
-  height: 9rem;
-  border-bottom: 1px rgba(146, 146, 146, 0.288) solid;
+  border-bottom: 2px rgba(209, 209, 208, 0.541) solid;
+}
+
+footer {
+  bottom: 0;
+  background-color: white;
+  border-top: 2px rgba(209, 209, 208, 0.541) solid;
 }
 
 .wrapper {

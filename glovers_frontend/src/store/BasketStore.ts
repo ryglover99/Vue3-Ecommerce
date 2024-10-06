@@ -36,7 +36,6 @@ export const useBasketStore = defineStore('basket', {
     },
     removeProduct(id: number) {
       const index = this.products.findIndex((item) => item.product.id === id)
-
       if (index > -1) {
         this.products.splice(index, 1)
       }

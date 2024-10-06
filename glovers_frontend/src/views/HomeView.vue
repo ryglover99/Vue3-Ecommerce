@@ -10,8 +10,10 @@ import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import image1 from '@/assets/img/green-go-show2.png'
 import image2 from '@/assets/img/green-go-show3.png'
+import HelperMethods from '@/Helpers/HelperMethods'
 
 const productsService = new ProductsService()
+const helper = new HelperMethods()
 
 export default defineComponent({
   props: {
@@ -80,6 +82,7 @@ export default defineComponent({
   },
   watch: {},
   async mounted() {
+    helper.scrollToTop()
     await this.getAllCategories()
     await Promise.all([this.getFirstProductInEachCategory(), this.getLimitedProducts(12)])
   }
@@ -94,10 +97,10 @@ export default defineComponent({
           <div class="carousel__item">
             <div class="caro-div">
               <img :src="image.url" />
-              <div v-if="image.overlayText != null" class="overlay d-flex flex-column">
+              <!-- <div v-if="image.overlayText != null" class="overlay d-flex flex-column">
                 <h2>{{ image.overlayText }}</h2>
                 <button class="btn btn-success mt-4">Explore</button>
-              </div>
+              </div> -->
             </div>
           </div>
         </Slide>

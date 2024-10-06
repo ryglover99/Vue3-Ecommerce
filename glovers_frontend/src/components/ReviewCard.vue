@@ -24,7 +24,7 @@
 <script lang="ts">
 import type IProduct from '@/interfaces/IProduct'
 import HelperMethods from '@/Helpers/HelperMethods'
-import { useBasketStore } from '@/store/store'
+import { useBasketStore } from '@/store/BasketStore'
 import { defineComponent } from 'vue'
 import type { Prop, PropType } from 'vue'
 import type IReview from '@/interfaces/IReview'
@@ -38,3 +38,4 @@ export default defineComponent({
 </script>
 
 <style scoped></style>
+@/store/BasketStore

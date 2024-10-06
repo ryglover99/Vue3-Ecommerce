@@ -50,7 +50,7 @@
 <script lang="ts">
 import type IProduct from '@/interfaces/IProduct'
 import HelperMethods from '@/Helpers/HelperMethods'
-import { useBasketStore } from '@/store/store'
+import { useBasketStore } from '@/store/BasketStore'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import ProductsService from '@/services/ProductsService'
@@ -207,3 +207,4 @@ export default defineComponent({
   width: 35%;
 }
 </style>
+@/store/BasketStore

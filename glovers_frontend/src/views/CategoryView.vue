@@ -7,8 +7,10 @@ import ReviewCard from '@/components/ReviewCard.vue'
 import type IReview from '@/interfaces/IReview'
 
 import type IProduct from '@/interfaces/IProduct'
+import HelperMethods from '@/Helpers/HelperMethods'
 
 const productsService = new ProductsService()
+const helper = new HelperMethods()
 
 export default defineComponent({
   setup() {},
@@ -22,7 +24,9 @@ export default defineComponent({
   computed: {},
   methods: {},
   watch: {},
-  async mounted() {}
+  async mounted() {
+    helper.scrollToTop()
+  }
 })
 </script>
 
@@ -31,3 +35,4 @@ export default defineComponent({
 </template>
 
 <style scoped></style>
+@/store/BasketStore

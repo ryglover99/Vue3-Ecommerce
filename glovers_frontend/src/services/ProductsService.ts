@@ -1,8 +1,9 @@
 import axios from 'axios'
 import type IProduct from '@/interfaces/IProduct'
 import type IReview from '@/interfaces/IReview'
+import type IProductsService from '@/interfaces/IProductsService'
 
-export default class ProductsService {
+export default class ProductsService implements IProductsService {
   private baseUrl: string = 'https://localhost:44316/api/Products'
 
   private static defaultProductResponse: IProduct = {
@@ -11,7 +12,8 @@ export default class ProductsService {
     price: 0,
     category: '',
     description: '',
-    image: ''
+    image: '',
+    nutritionImage: ''
   }
 
   private static defaultReviewResponse: IReview = {

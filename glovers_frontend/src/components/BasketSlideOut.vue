@@ -43,7 +43,7 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 import type IProduct from '@/interfaces/IProduct'
-import { useBasketStore } from '@/store/store'
+import { useBasketStore } from '@/store/BasketStore'
 
 export default defineComponent({
   setup() {
@@ -86,3 +86,4 @@ export default defineComponent({
   height: 50px;
 }
 </style>
+@/store/BasketStore

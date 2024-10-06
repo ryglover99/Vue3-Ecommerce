@@ -5,17 +5,7 @@
         <div class="logo" @click="pushHome()" style="cursor: pointer">
           <img src="@/assets/img/green-go-logo.png" />
         </div>
-        <div class="search">
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
+        <SearchBar></SearchBar>
         <div class="basket">
           <button @click="$emit('showBasketEvent')">
             <span :hidden="store.getBasketCount <= 0" class="count">{{
@@ -28,7 +18,7 @@
     </div>
     <nav class="navbar navbar-expand-lg">
       <div class="innerNav-container">
-        <div class="container-fluid">
+        <div class="container-fluid p-0">
           <button
             class="navbar-toggler"
             type="button"
@@ -42,9 +32,6 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -123,8 +110,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useBasketStore } from '@/store/store'
+import { useBasketStore } from '@/store/BasketStore'
+import SearchBar from '@/components/SearchBar.vue'
+
 export default defineComponent({
+  components: {
+    SearchBar
+  },
   setup() {
     const store = useBasketStore()
     return { store }
@@ -177,7 +169,8 @@ export default defineComponent({
 }
 
 .basket {
-  position: relative;
+  position: absolute;
+  right: 100px;
 }
 
 .basket img {
@@ -204,15 +197,12 @@ export default defineComponent({
 }
 
 .logo {
-  width: 20%;
-  height: 100%;
-  padding: 0px 15px 0px 20px;
   display: flex;
   justify-content: start;
   align-items: center;
 
   img {
-    width: 190px;
+    width: 140px;
   }
 }
 
@@ -241,3 +231,4 @@ export default defineComponent({
   margin-right: 0;
 }
 </style>
+@/store/BasketStore

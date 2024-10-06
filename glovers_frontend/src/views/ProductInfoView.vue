@@ -2,13 +2,15 @@
 import { defineComponent, type PropType } from 'vue'
 import ProductsService from '@/services/ProductsService'
 import BasketSlideOut from '@/components/BasketSlideOut.vue'
-import { useBasketStore } from '@/store/store'
+import { useBasketStore } from '@/store/BasketStore'
 import ReviewCard  from '@/components/ReviewCard.vue'
 import type IReview from '@/interfaces/IReview'
 
 import type IProduct from '@/interfaces/IProduct'
+import HelperMethods from '@/Helpers/HelperMethods'
 
 const productsService = new ProductsService()
+const helper = new HelperMethods();
 
 export default defineComponent({
   setup() {
@@ -71,6 +73,7 @@ export default defineComponent({
   },
   watch: {},
   async mounted() {
+    helper.scrollToTop();
     if (this.id == null) return
     var prod = await this.getProductById(this.id)
     if (!prod) return
@@ -263,3 +266,4 @@ export default defineComponent({
   margin-left: 10px;
 }
 </style>
+@/store/BasketStore
