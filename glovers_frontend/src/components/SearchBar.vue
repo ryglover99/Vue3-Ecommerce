@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 import { useBasketStore } from '@/store/BasketStore'
 import { useSharedStore } from '@/store/SharedStore'
 
@@ -43,7 +43,9 @@ export default defineComponent({
   emits: {
     showBasketEvent: null
   },
-  props: {},
+  props: {
+    toggleBasketSlideEvent: Boolean as PropType<boolean>
+  },
   data() {
     const searchTerm: string = ''
     const showBasket: boolean = false

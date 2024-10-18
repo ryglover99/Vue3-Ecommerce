@@ -57,7 +57,6 @@ export default defineComponent({
   },
   methods: {
     saveProductToStore(product: IProduct) {
-      console.log('adding', product)
       this.store.addProduct(this.product)
     },
     async getProductById(id: string) {
@@ -67,20 +66,25 @@ export default defineComponent({
     },
     async getAllReviewsForProduct(productId:number){
       let reviews = await productsService.getAllReviewForProduct(productId);
-      console.log(reviews, "rev");
       return reviews;
+    },
+    async renderProductInfo(){
+      if (this.id == null) return
+
+      var prod = await this.getProductById(this.id)
+      if (!prod) return
+
+      this.product = prod
+      this.reviews = await this.getAllReviewsForProduct(parseInt(this.id))
     }
   },
-  watch: {},
+  watch: {
+    async $route (){
+      await this.renderProductInfo() // Need to handle this by watching route, because if the go-to route contains the same component as the previous route, it will not re-make it.
+    }
+  },
   async mounted() {
-    helper.scrollToTop();
-    if (this.id == null) return
-    var prod = await this.getProductById(this.id)
-    if (!prod) return
-    this.product = prod
-    let inff = parseInt(this.id)
-    console.log(inff, "ingf");
-    this.reviews = await this.getAllReviewsForProduct(parseInt(this.id))
+    await this.renderProductInfo()
   }
 })
 </script>

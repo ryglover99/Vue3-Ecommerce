@@ -7,9 +7,7 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <span style="padding-left: 20px"
-              >We deliver within 3 business days to ensure your products are fresh!</span
-            >
+            <span>We deliver within 3 business days to ensure your products are fresh!</span>
           </div>
         </div>
       </div>
@@ -34,7 +32,7 @@
       <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Green Go, Inc</span>
     </div>
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex"></ul>
-    <div class="logo" @click="pushHome()" style="cursor: pointer">
+    <div class="logo" style="cursor: pointer">
       <img src="@/assets/img/green-go-logo.png" width="100" class="mx-4" />
     </div>
   </footer>
@@ -47,8 +45,10 @@ import BasketSlideOut from './components/BasketSlideOut.vue'
 import { defineComponent } from 'vue'
 import ProductsService from './services/ProductsService'
 import { useSharedStore } from '@/store/SharedStore'
+import HelperMethods from './Helpers/HelperMethods'
 
 const productsService = new ProductsService()
+const helper = new HelperMethods()
 
 export default defineComponent({
   data() {
@@ -64,7 +64,12 @@ export default defineComponent({
     BasketSlideOut
   },
   computed: {},
-  watch: {},
+  watch: {
+    async $route() {
+      this.hideBasket()
+      helper.scrollToTop()
+    }
+  },
   methods: {
     toggleBasketSlideCallback() {
       this.toggleBasketSlide = !this.toggleBasketSlide
@@ -82,7 +87,6 @@ export default defineComponent({
   },
   async mounted() {
     await this.initialize()
-    console.log(this.sharedStore.getProducts)
   }
 })
 </script>
@@ -90,11 +94,11 @@ export default defineComponent({
 <style>
 body {
   height: 100%;
-  background-color: rgba(247, 247, 243, 0.902) !important;
+  background-color: white !important;
 }
 main {
   min-height: 100vh;
-  padding-top: 100px;
+  padding-top: 50px;
   padding-bottom: 100px;
 }
 .nav-wrap {

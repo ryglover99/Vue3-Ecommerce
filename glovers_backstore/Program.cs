@@ -1,6 +1,6 @@
-using glovers_backstore.Data;
 using glovers_backstore.Interfaces;
 using glovers_backstore.Services;
+using glovers_backstore.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;

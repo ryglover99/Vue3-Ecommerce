@@ -36,7 +36,6 @@ export default defineComponent({
   },
   methods: {
     getImagePath(image: any) {
-      console.log(image, 'img')
       return require(`@/assets/img/${image}`)
     }
   },

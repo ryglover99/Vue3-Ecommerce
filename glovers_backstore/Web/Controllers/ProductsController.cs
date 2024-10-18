@@ -1,8 +1,7 @@
-﻿using glovers_backstore.Interfaces;
-using glovers_backstore.Data.Models;
+﻿using glovers_backstore.Data.Models;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using glovers_backstore.Interfaces;
 
 namespace glovers_backstore.Controllers
 {

@@ -1,8 +1,8 @@
 ﻿using glovers_backstore.Data;
-using glovers_backstore.Interfaces;
 using glovers_backstore.Data.Models;
 using glovers_backstore.Services.Base;
 using Microsoft.EntityFrameworkCore;
+using glovers_backstore.Interfaces;
 
 namespace glovers_backstore.Services
 {

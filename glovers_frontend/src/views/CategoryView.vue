@@ -24,9 +24,7 @@ export default defineComponent({
   computed: {},
   methods: {},
   watch: {},
-  async mounted() {
-    helper.scrollToTop()
-  }
+  async mounted() {}
 })
 </script>
 

@@ -82,7 +82,6 @@ export default defineComponent({
   },
   watch: {},
   async mounted() {
-    helper.scrollToTop()
     await this.getAllCategories()
     await Promise.all([this.getFirstProductInEachCategory(), this.getLimitedProducts(12)])
   }

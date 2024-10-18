@@ -1,4 +1,4 @@
-<template>
+<template class="parent">
   <div class="container d-flex flex-column shadow-lg">
     <div class="row mb-4">
       <div class="col d-flex justify-content-start">
@@ -20,22 +20,31 @@
     <p :hidden="store.getBasketCount > 0" class="text-secondary text-center">
       It looks like your cart is empty!
     </p>
-    <ol class="list-group list-group-numbered">
-      <li
-        v-for="product in getAllBasketProducts()"
-        :key="product.product.id"
-        class="list-group-item d-flex justify-content-between align-items-start"
-      >
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">{{ product.product.title }}</div>
-          {{ product.product.description }}
-        </div>
-        <span class="badge text-bg-primary rounded-pill">{{ product.quantity }}</span>
-      </li>
-    </ol>
+    <div class="productsWrap">
+      <ol class="list-group">
+        <li
+          v-for="product in getAllBasketProducts()"
+          :key="product.product.id"
+          class="list-group-item d-flex justify-content-between align-items-start"
+        >
+          <img :src="'/src/assets/img/' + product.product.image" width="50" height="50" />
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">{{ product.product.title }}</div>
+            <div class="col-12">{{ product.product.description }}</div>
+            <div class="col-12">£{{ product.product.price }}</div>
+          </div>
+          <span class="badge text-bg-dark rounded-pill"> x {{ product.quantity }}</span>
+        </li>
+      </ol>
+    </div>
+    <hr :hidden="store.getBasketCount <= 0" />
+    <span :hidden="store.getBasketCount <= 0" class="text-end fs-5">Total: £{{ sumTotal() }}</span>
     <div class="row mt-auto d-flex">
-      <div class="col-9"></div>
-      <div class="col-3"><div class="btn btn-success">Go to checkout</div></div>
+      <div class="col-12 d-flex justify-content-end">
+        <div :hidden="store.getBasketCount <= 0" @click="pushToCheckout()" class="btn btn-success">
+          Go to checkout
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +71,12 @@ export default defineComponent({
   methods: {
     getAllBasketProducts() {
       return this.store.getProducts
+    },
+    pushToCheckout() {
+      this.$router.push('/checkout')
+    },
+    sumTotal() {
+      return this.store.getSumTotal
     }
   },
   computed: {},
@@ -70,8 +85,25 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.parent {
+  transition: display 5s;
+}
+
+.productsWrap {
+  overflow-y: scroll;
+  max-height: 310px;
+  min-height: 310px;
+}
+
+hr {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 2px solid rgba(0, 0, 0, 0.5);
+}
+
 .container {
-  z-index: 1000;
+  z-index: 9999;
   padding: 2rem;
   height: 100%;
   width: 35vw;
@@ -86,4 +118,3 @@ export default defineComponent({
   height: 50px;
 }
 </style>
-@/store/BasketStore

@@ -8,13 +8,22 @@ const initialState = {
 export const useBasketStore = defineStore('basket', {
   state: () => initialState,
   getters: {
-    getProducts: (state) => state.products,
+    getProducts: (state) => {
+      console.log('products', state.products)
+      return state.products
+    },
     getBasketCount: (state) => {
       let count = 0
       for (let i = 0; i < state.products.length; i++) {
         count += state.products[i].quantity
       }
       return count
+    },
+    getSumTotal: (state) => {
+      return state.products.reduce((total, item) => {
+        let totalDecimal = total + item.product.price * item.quantity
+        return Number(totalDecimal.toPrecision(4))
+      }, 0.0)
     }
   },
   actions: {
