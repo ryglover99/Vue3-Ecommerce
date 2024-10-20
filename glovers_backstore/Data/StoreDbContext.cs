@@ -1,6 +1,7 @@
 ﻿using glovers_backstore.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace glovers_backstore.Data
 {
     public class StoreDbContext : DbContext
