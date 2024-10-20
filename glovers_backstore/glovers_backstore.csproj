@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <Folder Include="Business\Models\" />
-    <Folder Include="Core\" />
   </ItemGroup>
 
 </Project>

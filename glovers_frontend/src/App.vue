@@ -17,9 +17,7 @@
     </div>
   </header>
   <main>
-    <section>
-      <BasketSlideOut @hide-basket-event="hideBasket" v-if="toggleBasketSlide"></BasketSlideOut>
-    </section>
+    <BasketSlideOut @hide-basket-event="hideBasket" v-if="toggleBasketSlide"></BasketSlideOut>
     <div class="container">
       <RouterView :toggleBasketSlideEvent="toggleBasketSlide" />
     </div>
@@ -96,11 +94,15 @@ body {
   height: 100%;
   background-color: white !important;
 }
-main {
-  min-height: 100vh;
-  padding-top: 50px;
+
+section {
   padding-bottom: 100px;
 }
+
+main {
+  min-height: 100vh;
+}
+
 .nav-wrap {
   padding-left: 8%;
   padding-right: 12%;

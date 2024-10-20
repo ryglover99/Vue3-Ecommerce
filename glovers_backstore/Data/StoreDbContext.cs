@@ -9,6 +9,10 @@ namespace glovers_backstore.Data
 
         public DbSet<ProductReview> ProductReviews { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

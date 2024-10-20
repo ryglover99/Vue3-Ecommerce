@@ -1,5 +1,7 @@
 export default class HelperMethods {
-  public uppercaseFirstLetter(text: string): string {
+  public uppercaseFirstLetter(text: string | undefined): string {
+    if (!text) return ''
+
     let newTextArray: string[] = []
 
     text.split(' ').forEach((word) => {

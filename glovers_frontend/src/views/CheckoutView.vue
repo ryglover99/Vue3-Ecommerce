@@ -25,7 +25,7 @@
     </div>
     <div class="col-md-8 order-md-1">
       <h4 class="mb-3">Billing address</h4>
-      <form class="needs-validation was-validated" novalidate="false">
+      <form id="form" class="needs-validation" novalidate="false">
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="firstName">First name</label>
@@ -153,7 +153,9 @@
           </div>
         </div>
         <hr class="mb-4" />
-        <button class="btn btn-success btn-lg btn-block" type="submit">Complete Order</button>
+        <button class="btn btn-success btn-lg btn-block" type="submit" @click="onSubmit($event)">
+          Complete Order
+        </button>
       </form>
     </div>
   </div>
@@ -182,6 +184,17 @@ export default defineComponent({
     },
     sumTotal() {
       return this.store.getSumTotal
+    },
+    onSubmit(event: Event): void {
+      // TODO: Check for empty basket?
+      let form = document.getElementById('form') as HTMLFormElement
+      if (!form || !form.checkValidity()) {
+        event.preventDefault()
+        form.classList.add('was-validated')
+        return
+      }
+
+      // Submit to Server
     }
   },
   watch: {},

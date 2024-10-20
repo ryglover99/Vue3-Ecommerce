@@ -1,16 +1,11 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 import ProductsService from '@/services/ProductsService'
-import BasketSlideOut from '@/components/BasketSlideOut.vue'
-import { useBasketStore } from '@/store/store'
-import ReviewCard from '@/components/ReviewCard.vue'
-import type IReview from '@/interfaces/IReview'
-
+import { useSharedStore } from '@/store/SharedStore'
+import { Categories } from '@/Enums/CategoriesEnum'
+import ProductCard from '@/components/ProductCard.vue'
 import type IProduct from '@/interfaces/IProduct'
 import HelperMethods from '@/Helpers/HelperMethods'
-
-const productsService = new ProductsService()
-const helper = new HelperMethods()
 
 export default defineComponent({
   setup() {},
@@ -18,18 +13,47 @@ export default defineComponent({
     category: String
   },
   data() {
-    return {}
+    const helper = new HelperMethods()
+    var sharedStore = useSharedStore()
+    return {
+      helper,
+      sharedStore
+    }
   },
-  components: {},
+  components: {
+    ProductCard
+  },
   computed: {},
-  methods: {},
+  methods: {
+    catStringToEnum(str: string | undefined) {
+      if (str) {
+        str = this.helper.uppercaseFirstLetter(str)
+      } else {
+        return Categories.NotFound
+      }
+
+      console.log(Categories[str as keyof typeof Categories])
+      return Categories[str as keyof typeof Categories]
+    }
+  },
   watch: {},
   async mounted() {}
 })
 </script>
 
 <template>
-  {{ category }}
+  <section id="productsSec" class="pagesec">
+    <div class="container-fluid row gy-5">
+      <div class="productsSec-popProducts">
+        <h2 class="col">{{ helper.uppercaseFirstLetter(category) }}</h2>
+      </div>
+      <ProductCard
+        v-for="product in sharedStore.getAllProductsInCategory(catStringToEnum(category))"
+        :key="product.id"
+        :product="product"
+      ></ProductCard>
+    </div>
+  </section>
 </template>
 
 <style scoped></style>

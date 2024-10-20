@@ -89,25 +89,21 @@ export default defineComponent({
 </script>
 
 <template>
-  <section class="carouselSec">
+  <div class="carouselSec">
     <div class="row">
       <Carousel :autoplay="10000" :wrap-around="true" :itemsToShow="1">
         <Slide v-for="image in images" :key="image.id">
           <div class="carousel__item">
             <div class="caro-div">
               <img :src="image.url" />
-              <!-- <div v-if="image.overlayText != null" class="overlay d-flex flex-column">
-                <h2>{{ image.overlayText }}</h2>
-                <button class="btn btn-success mt-4">Explore</button>
-              </div> -->
             </div>
           </div>
         </Slide>
       </Carousel>
     </div>
-  </section>
+  </div>
 
-  <section id="featuredCategories" class="pagesec">
+  <section id="featuredCategories">
     <div class="row gy-5">
       <div class="productsSec-popProducts"><h2 class="col">Featured Categories</h2></div>
       <CategoryCard
@@ -119,7 +115,7 @@ export default defineComponent({
     </div>
   </section>
 
-  <section class="pagesec">
+  <section>
     <div class="row d-flex flex-row justify-content-between h-100 w-100 g-3">
       <div class="col-6 feat-card h-100">
         <div class="content-wrap d-flex justify-content-start align-items-start flex-column">

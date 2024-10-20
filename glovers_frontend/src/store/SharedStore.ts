@@ -11,6 +11,10 @@ export const useSharedStore = defineStore('shared', {
     getProducts: (state) => state.products,
     getProductsCount: (state) => {
       return state.products.length
+    },
+    getAllProductsInCategory: (state) => {
+      return (category: Categories) =>
+        state.products.filter((product) => (product.category as Categories) === category)
     }
   },
   actions: {
