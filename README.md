@@ -16,12 +16,4 @@ Welcome to <b>Green Go</b>, your one-stop online grocery store for the freshest 
     <li><b>Reviews:</b> Signup and write reviews for your purchased products</li>
 </ul>
 
-/* TODO: 
- * Return HTTP responses
- * Use standardised REST methods, PUT GET DELETE
- * Logging
- * JWT Auth
- * Cancellation Tokens
- */
-
 <img src="/readme/home.png">
