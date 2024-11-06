@@ -1,4 +1,4 @@
-﻿using glovers_backstore.Business.Enums;
+﻿using glovers_backstore.Business.Enums.Orders;
 using glovers_backstore.Controllers;
 
 namespace glovers_backstore.Data.Models

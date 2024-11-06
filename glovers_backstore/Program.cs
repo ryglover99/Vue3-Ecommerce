@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using glovers_backstore.Business.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,8 @@ builder.Services.AddDbContext<StoreDbContext>(options =>
 });
 
 // DI
-builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IProductsService, ProductService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 // TODO: Add HTTP Client Factory
 
 var app = builder.Build();

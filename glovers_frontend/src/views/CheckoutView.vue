@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row pt-5 pb-3">
     <div class="col-md-4 order-md-2 mb-4">
       <h4 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-muted">Your cart</span>
