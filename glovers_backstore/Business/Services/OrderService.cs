@@ -1,9 +1,9 @@
 ﻿using glovers_backstore.Data;
 using glovers_backstore.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using glovers_backstore.Interfaces;
 using glovers_backstore.Business.Interfaces;
 using glovers_backstore.Data.Enums;
+using glovers_backstore.Business.DTOs;
 
 namespace glovers_backstore.Services
 {
@@ -16,21 +16,31 @@ namespace glovers_backstore.Services
             _dbContext = dbContext;
         }
 
-        public async Task<Order> Get(int number)
+        public async Task<Order> Get(string number)
         {
            return await _dbContext.Orders.FirstOrDefaultAsync(o => o.Number == number);
         }
 
-        public async Task<TransactionStatus> Put(Order order)
+        public async Task<TransactionStatus> Put(OrderDTO order)
         {
-            await _dbContext.Orders.AddAsync(order);
+            try
+            {
 
-            int transactionCount = await _dbContext.SaveChangesAsync();
+                var mappedOrder = new Order(order);
 
-            if (transactionCount <= 0) return TransactionStatus.Failed;
+                await _dbContext.Orders.AddAsync(mappedOrder);
 
-            return TransactionStatus.Success;
+                int transactionCount = await _dbContext.SaveChangesAsync();
 
+                if (transactionCount <= 0) return TransactionStatus.Failed;
+
+                return TransactionStatus.Success;
+
+            } catch(Exception ex) 
+            {
+                return TransactionStatus.Failed;
+            }
         }
+
     }
 }

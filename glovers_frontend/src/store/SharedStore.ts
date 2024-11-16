@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type IProduct from '@/interfaces/IProduct'
+import type { Categories } from '@/Enums/CategoriesEnum'
 
 const initialState = {
   products: [] as IProduct[]

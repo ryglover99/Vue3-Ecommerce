@@ -4,7 +4,7 @@ import type IReview from '@/interfaces/IReview'
 import type IProductsService from '@/interfaces/IProductsService'
 
 export default class ProductsService implements IProductsService {
-  private baseUrl: string = 'https://localhost:44316/api/Products'
+  private baseUrl: string = 'https://localhost:44316/api/Product'
 
   private static defaultProductResponse: IProduct = {
     id: 0,
@@ -77,7 +77,6 @@ export default class ProductsService implements IProductsService {
   }
 
   public async getAllReviewForProduct(productId: number): Promise<IReview[]> {
-    console.log()
     let response = await axios.get(`${this.baseUrl}/getReviews/${productId}`)
     if (response.status == 200) {
       return response.data as IReview[]

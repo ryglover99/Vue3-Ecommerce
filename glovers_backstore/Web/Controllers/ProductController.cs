@@ -9,7 +9,7 @@ namespace glovers_backstore.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors]
-    public class ProductsController : ControllerBase
+    public class ProductController : ControllerBase
     {
         /* TODO: 
          * Return HTTP responses
@@ -21,7 +21,7 @@ namespace glovers_backstore.Controllers
 
         private readonly IProductsService _productsService;
 
-        public ProductsController(IProductsService productsService)
+        public ProductController(IProductsService productsService)
         {
             _productsService = productsService;
         }

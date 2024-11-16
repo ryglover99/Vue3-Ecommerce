@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using glovers_backstore.Data;
 
@@ -11,9 +12,11 @@ using glovers_backstore.Data;
 namespace glovers_backstore.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241112220017_AmendedOrderDetailsNameAndUpdatedOneToManyWithOrder")]
+    partial class AmendedOrderDetailsNameAndUpdatedOneToManyWithOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,9 +49,8 @@ namespace glovers_backstore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");

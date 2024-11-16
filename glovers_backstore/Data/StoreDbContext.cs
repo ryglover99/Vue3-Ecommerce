@@ -12,13 +12,19 @@ namespace glovers_backstore.Data
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<OrderProductDetails> OrderProductDetails { get; set; }
 
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Product>()
+         .Property(p => p.Id)
+         .ValueGeneratedOnAdd();
+
+           base.OnModelCreating(modelBuilder);
+
+
 
             #region Seed Initial Data
             modelBuilder.Entity<Product>().HasData(

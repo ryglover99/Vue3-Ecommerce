@@ -30,11 +30,11 @@
           <div class="col-md-6 mb-3">
             <label for="firstName">First name</label>
             <input
+              v-model="order.firstname"
               type="text"
               class="form-control"
               id="firstName"
               placeholder=""
-              value=""
               required
             />
             <div class="invalid-feedback">Valid first name is required.</div>
@@ -46,7 +46,7 @@
               class="form-control"
               id="lastName"
               placeholder=""
-              value=""
+              v-model="order.lastname"
               required
             />
             <div class="invalid-feedback">Valid last name is required.</div>
@@ -68,6 +68,7 @@
             class="form-control"
             id="address"
             placeholder="1234 Main St"
+            v-model="order.address"
             required
           />
           <div class="invalid-feedback">Please enter your shipping address.</div>
@@ -75,30 +76,27 @@
 
         <div class="mb-3">
           <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-          <input type="text" class="form-control" id="address2" placeholder="Apartment or suite" />
+          <input
+            type="text"
+            v-model="order.address2"
+            class="form-control"
+            id="address2"
+            placeholder="Apartment or suite"
+          />
         </div>
 
         <div class="row">
-          <div class="col-md-5 mb-3">
-            <label for="country">Country</label>
-            <select class="custom-select d-block w-100" id="country" required>
-              <option value="">Choose...</option>
-              <option>United States</option>
-            </select>
-            <div class="invalid-feedback">Please select a valid country.</div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="state">State</label>
-            <select class="custom-select d-block w-100" id="state" required>
-              <option value="">Choose...</option>
-              <option>California</option>
-            </select>
-            <div class="invalid-feedback">Please provide a valid state.</div>
-          </div>
           <div class="col-md-3 mb-3">
-            <label for="zip">Zip</label>
-            <input type="text" class="form-control" id="zip" placeholder="" required />
-            <div class="invalid-feedback">Zip code required.</div>
+            <label for="zip">Postcode</label>
+            <input
+              v-model="order.postcode"
+              type="text"
+              class="form-control"
+              id="zip"
+              placeholder=""
+              required
+            />
+            <div class="invalid-feedback">Postcode required.</div>
           </div>
         </div>
         <hr class="mb-4" />
@@ -116,14 +114,25 @@
           <div class="custom-control custom-radio">
             <input
               id="credit"
+              v-model="order.paymentMethod"
+              value="0"
               name="paymentMethod"
               type="radio"
               class="custom-control-input mx-3"
+              required
             />
             <label class="custom-control-label" for="credit">Credit card</label>
           </div>
           <div class="custom-control custom-radio">
-            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input mx-3" />
+            <input
+              v-model="order.paymentMethod"
+              value="1"
+              id="debit"
+              name="paymentMethod"
+              type="radio"
+              class="custom-control-input mx-3"
+              required
+            />
             <label class="custom-control-label" for="debit">Debit card</label>
           </div>
         </div>
@@ -164,6 +173,11 @@
 import { defineComponent, type PropType } from 'vue'
 import type IProduct from '@/interfaces/IProduct'
 import { useBasketStore } from '@/store/BasketStore'
+import OrderService from '@/services/OrderService'
+import type IOrder from '@/interfaces/IOrder'
+import { PaymentMethod } from '@/Enums/PaymentMethod'
+
+var orderService = new OrderService()
 
 export default defineComponent({
   props: {},
@@ -172,8 +186,17 @@ export default defineComponent({
     return { store }
   },
   data() {
+    var order: IOrder = {
+      firstname: '',
+      lastname: '',
+      address: '',
+      address2: '',
+      postcode: '',
+      paymentMethod: PaymentMethod.CreditCard,
+      BasketItems: []
+    }
     return {
-      // Reactive data here
+      order
     }
   },
   components: {},
@@ -186,14 +209,19 @@ export default defineComponent({
       return this.store.getSumTotal
     },
     onSubmit(event: Event): void {
+      event.preventDefault()
       // TODO: Check for empty basket?
+      console.log('ON SUBMIT')
       let form = document.getElementById('form') as HTMLFormElement
       if (!form || !form.checkValidity()) {
         event.preventDefault()
         form.classList.add('was-validated')
+        console.log('badd valid')
         return
       }
 
+      this.order.BasketItems = this.getAllBasketProducts()
+      orderService.saveOrder(this.order)
       // Submit to Server
     }
   },
