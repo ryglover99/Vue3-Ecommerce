@@ -5,6 +5,7 @@ using glovers_backstore.Interfaces;
 using glovers_backstore.Business.Interfaces;
 using glovers_backstore.Data.Enums;
 using glovers_backstore.Business.DTOs;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace glovers_backstore.Controllers
 {
@@ -14,10 +15,10 @@ namespace glovers_backstore.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        public OrderController(IOrderService orderService) 
+        public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
-        } 
+        }
 
         [HttpGet]
         [ProducesResponseType(200)]
@@ -27,17 +28,18 @@ namespace glovers_backstore.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> Put([FromBody] OrderDTO order)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Put([FromBody] OrderRequestDTO order)
         {
             var result = await _orderService.Put(order);
 
-            return result switch
+            switch (result.Status)
             {
-                TransactionStatus.Success => Ok(),
-                _ => StatusCode(500),
-            };
+                case TransactionStatus.Success:
+                    return Created(Request.GetDisplayUrl(), result);
+                default: return BadRequest(result);
+            }
         }
 
     }

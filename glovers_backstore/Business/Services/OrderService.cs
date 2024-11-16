@@ -21,25 +21,25 @@ namespace glovers_backstore.Services
            return await _dbContext.Orders.FirstOrDefaultAsync(o => o.Number == number);
         }
 
-        public async Task<TransactionStatus> Put(OrderDTO order)
+        public async Task<UnitOfWork<Order>> Put(OrderRequestDTO order)
         {
+            var mappedOrder = new Order(order);
+
             try
             {
-
-                var mappedOrder = new Order(order);
-
                 await _dbContext.Orders.AddAsync(mappedOrder);
 
                 int transactionCount = await _dbContext.SaveChangesAsync();
 
-                if (transactionCount <= 0) return TransactionStatus.Failed;
-
-                return TransactionStatus.Success;
+                if (transactionCount <= 0) 
+                    return new UnitOfWork<Order>(new Order(), TransactionStatus.Failed);
 
             } catch(Exception ex) 
             {
-                return TransactionStatus.Failed;
+               // Log
             }
+
+            return new UnitOfWork<Order>(mappedOrder, TransactionStatus.Success);
         }
 
     }

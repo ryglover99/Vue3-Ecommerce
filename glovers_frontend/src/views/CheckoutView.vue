@@ -176,6 +176,7 @@ import { useBasketStore } from '@/store/BasketStore'
 import OrderService from '@/services/OrderService'
 import type IOrder from '@/interfaces/IOrder'
 import { PaymentMethod } from '@/Enums/PaymentMethod'
+import router from '@/router'
 
 var orderService = new OrderService()
 

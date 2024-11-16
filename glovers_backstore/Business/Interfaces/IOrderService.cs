@@ -8,6 +8,6 @@ namespace glovers_backstore.Business.Interfaces
     public interface IOrderService
     {
         public Task<Order> Get(string number);
-        public Task<TransactionStatus> Put(OrderDTO order);
+        public Task<UnitOfWork<Order>> Put(OrderRequestDTO order);
     }
 }

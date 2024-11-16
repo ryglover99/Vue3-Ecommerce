@@ -3,7 +3,7 @@ using glovers_backstore.Data.Models;
 
 namespace glovers_backstore.Business.DTOs
 {
-    public class OrderDTO
+    public class OrderRequestDTO
     {
         public PaymentMethod PaymentMethod { get; set; }
         public string Firstname { get; set; } = string.Empty;

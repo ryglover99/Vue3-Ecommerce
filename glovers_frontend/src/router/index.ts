@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ProductInfoView from '../views/ProductInfoView.vue'
 import CategoryView from '../views/CategoryView.vue'
 import CheckoutView from '@/views/CheckoutView.vue'
+import OrderConfirmationView from '@/views/OrderConfirmationView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,12 @@ const router = createRouter({
       path: '/checkout',
       name: 'checkout',
       component: CheckoutView,
+      props: true
+    },
+    {
+      path: '/order-confirmation',
+      name: 'orderConfirmation',
+      component: OrderConfirmationView,
       props: true
     }
   ]

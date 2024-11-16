@@ -9,7 +9,7 @@ namespace glovers_backstore.Data.Models
         private readonly Random random = new Random();
 
         public Order() { }
-        public Order(OrderDTO orderDTO) 
+        public Order(OrderRequestDTO orderDTO) 
         {
             Number = GenerateOrderNumber(random);
             TS = DateTime.Now;
@@ -25,7 +25,7 @@ namespace glovers_backstore.Data.Models
 
         [JsonIgnore]
         public int Id { get; set; }
-        public string Number { get; set; }
+        public string Number { get; set; } = string.Empty;
         public DateTime TS { get; set; }
         public OrderStatus Status { get; set; }
         public ICollection<OrderProductDetails> OrderProductDetails { get; set; } = new List<OrderProductDetails>();
@@ -43,7 +43,7 @@ namespace glovers_backstore.Data.Models
             return orderNumber;
         }
 
-        private ICollection<OrderProductDetails> GenerateOrderProductDetails(OrderDTO orderDTO, Order order)
+        private ICollection<OrderProductDetails> GenerateOrderProductDetails(OrderRequestDTO orderDTO, Order order)
         {
             if (orderDTO.BasketItems.Count <= 0) throw new ArgumentException("Empty Products");
 
