@@ -12,7 +12,7 @@ namespace glovers_backstore.Data
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<OrderProductDetailsDTO> OrderProductDetails { get; set; }
+        public DbSet<OrderProductDetails> OrderProductDetails { get; set; }
 
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options) { }
 

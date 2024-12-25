@@ -17,6 +17,7 @@ export default class OrderService implements IOrderService {
   async saveOrder(order: IOrder): Promise<boolean> {
     console.log(order, 'IORDER')
     let response = await axios.put(`${this.baseUrl}`, order)
-    return response.status === 200
+    console.log(response.data, 'response')
+    return response.status >= 200 && response.status < 300
   }
 }

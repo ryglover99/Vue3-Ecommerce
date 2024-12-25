@@ -54,6 +54,9 @@ export const useBasketStore = defineStore('basket', {
       var product = this.products[index]
 
       product.quantity += 1
+    },
+    emptyBasket() {
+      this.products = []
     }
   }
 })

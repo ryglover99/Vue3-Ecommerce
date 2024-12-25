@@ -52,7 +52,7 @@ namespace glovers_backstore.Data.Models
             foreach (var basketItem in orderDTO.BasketItems)
             {           
                 var productDetails = new OrderProductDetails();
-                productDetails.Order = order;
+                productDetails.OrderId = order.Id;
                 productDetails.Product = new Product(basketItem.Product);
                 productDetails.Quantity = basketItem.Quantity;
 
