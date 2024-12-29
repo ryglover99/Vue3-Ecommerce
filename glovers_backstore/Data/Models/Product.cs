@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using glovers_backstore.Business.DTOs;
+using glovers_backstore.Business.DTOs.Product;
 
 namespace glovers_backstore.Data.Models
 {

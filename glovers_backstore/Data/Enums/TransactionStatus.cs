@@ -4,6 +4,7 @@
     {
         Unknown,
         Success,
-        Failed
+        Failed,
+        NotFound
     }
 }

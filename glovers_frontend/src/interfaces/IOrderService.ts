@@ -1,5 +1,6 @@
-import type IOrder from './IOrder'
+import type IOrderRequest from './IOrderRequest'
+import type IOrderResponse from './IOrderResponse'
 
 export default interface IOrderService {
-  saveOrder(order: IOrder): Promise<boolean>
+  saveOrder(order: IOrderRequest): Promise<IOrderResponse | null>
 }

@@ -13,6 +13,12 @@
             }}</span>
             <img src="@/assets/img/icons8-shopping-bag-50.png" />
           </button>
+          <div
+            class="alert-wrap position-absolute px-2 pb-1 pt-1 bg-danger text-center d-flex align-items-center justify-content-center"
+            style="width: fit-content; left: 50%; transform: translateX(-50%); border-radius: 10px"
+          >
+            <p class="w-100 p-0 m-0" style="text-wrap: nowrap">{{ alertMessage }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -45,18 +51,18 @@ export default defineComponent({
   components: {
     SearchBar
   },
-  setup() {
-    const store = useBasketStore()
-    return { store }
-  },
   emits: {
     showBasketEvent: null
   },
   props: {},
   data() {
+    var alertMessage: string = 'TEST MESSAGE'
+    const store = useBasketStore()
     const showBasket: boolean = false
     return {
-      showBasket
+      alertMessage,
+      showBasket,
+      store
     }
   },
   methods: {
@@ -65,7 +71,19 @@ export default defineComponent({
     }
   },
   computed: {},
-  mounted() {}
+  watch: {
+    alertMessage() {
+      return this.alertMessage
+    }
+  },
+  mounted() {
+    this.$emitter.on('display-alert', (message: any) => {
+      this.alertMessage = message
+      setTimeout(() => {
+        this.alertMessage = ''
+      }, 3000)
+    })
+  }
 })
 </script>
 

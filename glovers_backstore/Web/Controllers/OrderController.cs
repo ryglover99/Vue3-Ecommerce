@@ -1,11 +1,9 @@
-﻿using glovers_backstore.Data.Models;
-using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using glovers_backstore.Interfaces;
 using glovers_backstore.Business.Interfaces;
 using glovers_backstore.Data.Enums;
-using glovers_backstore.Business.DTOs;
 using Microsoft.AspNetCore.Http.Extensions;
+using glovers_backstore.Business.DTOs.Order;
 
 namespace glovers_backstore.Controllers
 {
@@ -22,23 +20,36 @@ namespace glovers_backstore.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<Order> Get(string number)
+        public async Task<IActionResult> Get(string number)
         {
-            return await _orderService.Get(number);
-        }
 
-        [HttpPut]
-        [ProducesResponseType(201)]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> Put([FromBody] OrderRequestDTO order)
-        {
-            var result = await _orderService.Put(order);
+            if(string.IsNullOrEmpty(number)) return BadRequest();
+
+            var result = await _orderService.Get(number);
 
             switch (result.Status)
             {
                 case TransactionStatus.Success:
-                    return Created(Request.GetDisplayUrl(), result);
-                default: return BadRequest(result);
+                    return Ok(result.Data);
+                default: return Problem();
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Create([FromBody] OrderRequestDTO order)
+        {
+            if (order == null) return BadRequest();
+
+            var result = await _orderService.Create(order);
+
+            switch (result.Status)
+            {
+                case TransactionStatus.Success:
+                    return Created(Request.GetDisplayUrl(), result.Data);
+                default: return Problem();
             }
         }
 

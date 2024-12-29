@@ -1,8 +1,8 @@
-﻿using glovers_backstore.Data.Models;
-using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using glovers_backstore.Interfaces;
 using glovers_backstore.Business.Enums.Products;
+using glovers_backstore.Data.Enums;
 
 namespace glovers_backstore.Controllers
 {
@@ -28,49 +28,115 @@ namespace glovers_backstore.Controllers
 
         [HttpGet("getAllProducts")]
         [ProducesResponseType(200)]
-        public async Task<List<Product>> GetAllProducts()
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetAllProducts()
         {
-            return await _productsService.Get();
+            var result = await _productsService.Get();
+
+            switch (result.Status)
+            {
+                case TransactionStatus.Success:
+                    return Ok(result.Data);
+                case TransactionStatus.NotFound:
+                    return NotFound();
+                default: return Problem();
+            }
         }
 
         [HttpGet("getProduct/{id}")]
         [ProducesResponseType(200)]
-        public async Task<Product> GetSingleProduct(int id)
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetSingleProduct(int id)
         {
-            return await _productsService.Get(id);
+            var result = await _productsService.Get(id);
+
+            switch (result.Status)
+            {
+                case TransactionStatus.Success:
+                    return Ok(result.Data);
+                case TransactionStatus.NotFound:
+                    return NotFound();
+                default: return Problem();
+            }
         }
 
         [HttpGet("getAllProducts/{amount:int}")]
         [ProducesResponseType(200)]
-        public async Task<List<Product>> GetLimitedProducts(int amount)
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetLimitedProducts(int amount)
         {
-            return await _productsService.GetLimited(amount);
+            var result = await _productsService.GetLimited(amount);
+
+            switch (result.Status)
+            {
+                case TransactionStatus.Success:
+                    return Ok(result.Data);
+                case TransactionStatus.NotFound:
+                    return NotFound();
+                default: return Problem();
+            }
         }
 
         [HttpGet("getAllCategories")]
         [ProducesResponseType(200)]
-        public async Task<List<string>> GetAllCategories()
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetAllCategories()
         {
-            return await _productsService.GetCategories();
+            var result = await _productsService.GetCategories();
+
+            switch (result.Status)
+            {
+                case TransactionStatus.Success:
+                    return Ok(result.Data);
+                case TransactionStatus.NotFound:
+                    return NotFound();
+                default: return Problem();
+            }
         }
 
         [HttpGet("getAllProducts/{category}")]
         [ProducesResponseType(200)]
-        public async Task<List<Product>> GetAllProductsInCategory(string category)
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetAllProductsInCategory(string category)
         {
-            var result = Enum.TryParse(category, true, out ProductCategoryEnum parsedCategory);
+            var canParseEnum = Enum.TryParse(category, true, out ProductCategoryEnum parsedCategory);
 
-            if (!result) { return new List<Product>(); }
+            if (!canParseEnum) { return BadRequest(); }
 
-            return await _productsService.Get(parsedCategory);
+            var result = await _productsService.Get(parsedCategory);
+
+            switch (result.Status)
+            {
+                case TransactionStatus.Success:
+                    return Ok(result.Data);
+                case TransactionStatus.NotFound:
+                    return NotFound();
+                default: return Problem();
+            }
         }
 
         [HttpGet("getReviews/{id}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
 
-        public async Task<List<ProductReview>> GetReviewsForProduct(int id)
+        public async Task<IActionResult> GetReviewsForProduct(int id)
         {
-            return await _productsService.GetReviews(id);
+            var result = await _productsService.GetReviews(id);
+
+            switch (result.Status)
+            {
+                case TransactionStatus.Success:
+                    return Ok(result.Data);
+                case TransactionStatus.NotFound:
+                    return NotFound();
+                default: return Problem();
+            }
         }
 
     }

@@ -3,7 +3,8 @@ using glovers_backstore.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using glovers_backstore.Business.Interfaces;
 using glovers_backstore.Data.Enums;
-using glovers_backstore.Business.DTOs;
+using glovers_backstore.Business.DTOs.Order;
+using glovers_backstore.Business.Mapping;
 
 namespace glovers_backstore.Services
 {
@@ -16,14 +17,19 @@ namespace glovers_backstore.Services
             _dbContext = dbContext;
         }
 
-        public async Task<Order> Get(string number)
+        public async Task<UnitOfWork<OrderResponseDTO>> Get(string number)
         {
-           return await _dbContext.Orders.FirstOrDefaultAsync(o => o.Number == number);
+            var orderEntity = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Number == number);
+
+            if (orderEntity == null)
+                return new UnitOfWork<OrderResponseDTO>(new OrderResponseDTO(), TransactionStatus.Failed);
+
+            return new UnitOfWork<OrderResponseDTO>(orderEntity.MapToResponseDTO(), TransactionStatus.Success);
         }
 
-        public async Task<UnitOfWork<Order>> Put(OrderRequestDTO order)
+        public async Task<UnitOfWork<OrderResponseDTO>> Create(OrderRequestDTO order)
         {
-            var mappedOrder = new Order(order);
+            var mappedOrder = order.MapToEntity();
 
             try
             {
@@ -31,15 +37,16 @@ namespace glovers_backstore.Services
 
                 int transactionCount = await _dbContext.SaveChangesAsync();
 
-                if (transactionCount <= 0) 
-                    return new UnitOfWork<Order>(new Order(), TransactionStatus.Failed);
+                if (transactionCount <= 0)
+                    return new UnitOfWork<OrderResponseDTO>(new OrderResponseDTO(), TransactionStatus.Failed);
 
-            } catch(Exception ex) 
+            }
+            catch (Exception ex)
             {
-               // Log
+                // Log
             }
 
-            return new UnitOfWork<Order>(mappedOrder, TransactionStatus.Success);
+            return new UnitOfWork<OrderResponseDTO>(mappedOrder.MapToResponseDTO(), TransactionStatus.Success);
         }
 
     }

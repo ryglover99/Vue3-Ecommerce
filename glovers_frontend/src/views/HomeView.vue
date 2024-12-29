@@ -62,6 +62,7 @@ export default defineComponent({
     },
 
     async getFirstProductInEachCategory(): Promise<void> {
+      console.log(this.categories, 'this.categories')
       if (this.categories.length <= 0) return
 
       let products: IProduct[] = []

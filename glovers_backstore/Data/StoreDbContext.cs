@@ -19,10 +19,36 @@ namespace glovers_backstore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
-         .Property(p => p.Id)
-         .ValueGeneratedOnAdd();
+             .Property(p => p.Id)
+             .ValueGeneratedOnAdd();
 
-           base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ProductReview>()
+            .Property(p => p.Id)
+            .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<ProductReview>()
+            .Navigation(pr => pr.Product)
+            .AutoInclude();
+
+            modelBuilder.Entity<Order>()
+            .Property(p => p.Id)
+            .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Order>()
+            .Navigation(pr => pr.OrderProductDetails)
+            .AutoInclude();
+
+
+            modelBuilder.Entity<OrderProductDetails>()
+            .Property(p => p.Id)
+            .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<OrderProductDetails>()
+            .Navigation(pr => pr.Product)
+            .AutoInclude();
+
+
+            base.OnModelCreating(modelBuilder);
 
 
 

@@ -140,7 +140,10 @@ export default defineComponent({
   },
   computed: {},
   async mounted() {
-    await this.calculateAverageRating(this.product)
+    if (this.product) {
+      await this.calculateAverageRating(this.product)
+    }
+
     this.addScrollingTextClassToElements()
   }
 })

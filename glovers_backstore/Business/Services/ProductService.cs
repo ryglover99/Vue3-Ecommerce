@@ -3,6 +3,9 @@ using glovers_backstore.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using glovers_backstore.Interfaces;
 using glovers_backstore.Business.Enums.Products;
+using glovers_backstore.Business.DTOs.Product;
+using glovers_backstore.Data.Enums;
+using glovers_backstore.Business.Mapping;
 
 namespace glovers_backstore.Services
 {
@@ -16,23 +19,129 @@ namespace glovers_backstore.Services
         }
 
         #region GET
-        public async Task<List<Product>> Get()
-            => await _dbContext.Products.ToListAsync();
+        public async Task<UnitOfWork<List<ProductDTO>>> Get()
+        {
+            var products = await _dbContext.Products.ToListAsync();
 
-        public async Task<Product> Get(int id)
-             => await _dbContext.Products.Where(p => p.Id.Equals(id)).FirstOrDefaultAsync();
+            if(products.Count <= 0)
+            {
+                return new UnitOfWork<List<ProductDTO>>(new List<ProductDTO>(), TransactionStatus.NotFound);
+            }
 
-        public async Task<List<Product>> Get(ProductCategoryEnum category)
-            => await _dbContext.Products.Where(p => p.Category.Equals(category.ToString())).ToListAsync();
+            try
+            {
+                var productDtos = products.Select(p => p.MapToDTO()).ToList();
+                return new UnitOfWork<List<ProductDTO>>(productDtos, TransactionStatus.Success);
 
-        public async Task<List<Product>> GetLimited(int amount)
-            => await _dbContext.Products.Take(amount).ToListAsync();
+            } catch (Exception ex) 
+            {
+                return new UnitOfWork<List<ProductDTO>>(new List<ProductDTO>(), TransactionStatus.Failed);
+            }
+        }
 
-        public async Task<List<string>> GetCategories()
-             => await _dbContext.Products.GroupBy(p => p.Category).Select(c => c.Key).ToListAsync();
+        public async Task<UnitOfWork<ProductDTO>> Get(int id)
+        {
+            var product = await _dbContext.Products.Where(p => p.Id.Equals(id)).FirstOrDefaultAsync();
 
-        public async Task<List<ProductReview>> GetReviews(int productId)
-            => await _dbContext.ProductReviews.Where(pr => pr.ProductId.Equals(productId)).ToListAsync();
+            if (product == null)
+            {
+                return new UnitOfWork<ProductDTO>(new ProductDTO(), TransactionStatus.NotFound);
+            }
+
+            try
+            {
+                var productDto = product.MapToDTO();
+                return new UnitOfWork<ProductDTO>(productDto, TransactionStatus.Success);
+
+            }
+            catch (Exception ex)
+            {
+                return new UnitOfWork<ProductDTO>(new ProductDTO(), TransactionStatus.Failed);
+            }
+        }
+
+        public async Task<UnitOfWork<List<ProductDTO>>> Get(ProductCategoryEnum category)
+        {
+            var products = await _dbContext.Products.Where(p => p.Category.Equals(category.ToString())).ToListAsync();
+
+            if (products.Count <= 0)
+            {
+                return new UnitOfWork<List<ProductDTO>>(new List<ProductDTO>(), TransactionStatus.NotFound);
+            }
+
+            try
+            {
+                var productDtos = products.Select(p => p.MapToDTO()).ToList();
+                return new UnitOfWork<List<ProductDTO>>(productDtos, TransactionStatus.Success);
+
+            }
+            catch (Exception ex)
+            {
+                return new UnitOfWork<List<ProductDTO>>(new List<ProductDTO>(), TransactionStatus.Failed);
+            }
+        }
+
+        public async Task<UnitOfWork<List<ProductDTO>>> GetLimited(int amount)
+        {
+            var products = await _dbContext.Products.Take(amount).ToListAsync();
+
+            if (products.Count <= 0)
+            {
+                return new UnitOfWork<List<ProductDTO>>(new List<ProductDTO>(), TransactionStatus.NotFound);
+            }
+
+            try
+            {
+                var productDtos = products.Select(p => p.MapToDTO()).ToList();
+                return new UnitOfWork<List<ProductDTO>>(productDtos, TransactionStatus.Success);
+
+            }
+            catch (Exception ex)
+            {
+                return new UnitOfWork<List<ProductDTO>>(new List<ProductDTO>(), TransactionStatus.Failed);
+            }
+        }
+
+        public async Task<UnitOfWork<List<string>>> GetCategories()
+        {
+            var categories = await _dbContext.Products.GroupBy(p => p.Category).Select(c => c.Key).ToListAsync();
+
+            if (categories.Count <= 0)
+            {
+                return new UnitOfWork<List<string>>(new List<string>(), TransactionStatus.NotFound);
+            }
+
+            try
+            {
+                return new UnitOfWork<List<string>>(categories, TransactionStatus.Success);
+
+            }
+            catch (Exception ex)
+            {
+                return new UnitOfWork<List<string>>(new List<string>(), TransactionStatus.Failed);
+            }
+        }
+
+        public async Task<UnitOfWork<List<ProductReviewDTO>>> GetReviews(int productId)
+        {
+            var reviewEntities = await _dbContext.ProductReviews.Where(pr => pr.ProductId.Equals(productId)).ToListAsync();
+
+            if (reviewEntities.Count <= 0)
+            {
+                return new UnitOfWork<List<ProductReviewDTO>>(new List<ProductReviewDTO>(), TransactionStatus.NotFound);
+            }
+
+            try
+            {
+                var reviewDTOs = reviewEntities.Select(r => r.MapToDTO()).ToList();
+                return new UnitOfWork<List<ProductReviewDTO>>(reviewDTOs, TransactionStatus.Success);
+
+            }
+            catch (Exception ex)
+            {
+                return new UnitOfWork<List<ProductReviewDTO>>(new List<ProductReviewDTO>(), TransactionStatus.Failed);
+            }
+        }
 
         #endregion
 

@@ -1,9 +1,8 @@
 ﻿using glovers_backstore.Business.DTOs.Product;
-using glovers_backstore.Data.Models;
 
-namespace glovers_backstore.Business.DTOs
+namespace glovers_backstore.Business.DTOs.Order
 {
-    public class BasketDTO
+    public class OrderProductDetailsDTO
     {
         public ProductDTO Product { get; set; }
         public int Quantity { get; set; }

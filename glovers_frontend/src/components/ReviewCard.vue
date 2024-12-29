@@ -1,5 +1,5 @@
 <template>
-  <div class="reviewCard border border-light p-5">
+  <div class="reviewCard p-5">
     <div class="row">
       <div class="col-8 titleCol">
         <h4>"{{ review?.title }}"</h4>
