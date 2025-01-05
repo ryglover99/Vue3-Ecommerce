@@ -1,3 +1,68 @@
+<template>
+  <div class="carouselSec">
+    <div class="row">
+      <Carousel :autoplay="10000" :wrap-around="true" :itemsToShow="1">
+        <Slide v-for="image in images" :key="image.id">
+          <div class="carousel__item">
+            <div class="caro-div">
+              <img :src="image.url" />
+            </div>
+          </div>
+        </Slide>
+      </Carousel>
+    </div>
+  </div>
+
+  <section id="featuredCategories">
+    <div class="row gy-5">
+      <div class="productsSec-popProducts"><h2 class="col">Featured Categories</h2></div>
+      <CategoryCard
+        @click="pushToCategory(product.category.toLowerCase())"
+        v-for="product in productsInEachCategory"
+        :key="product.id"
+        :product="product"
+      ></CategoryCard>
+    </div>
+  </section>
+
+  <section>
+    <div class="row d-flex flex-row justify-content-between h-100 w-100 g-3">
+      <div class="col-6 feat-card h-100">
+        <div class="content-wrap d-flex justify-content-start align-items-start flex-column">
+          <span class="w-100">Find your Fresh Fruit</span>
+          <p class="w-100">
+            For the topping on your cake or for the grazers, view our fresh fruits now.
+          </p>
+          <button class="btn btn-light">Shop now</button>
+        </div>
+        <img
+          class="mw-100 h-100 object-fit-cover w-100 rounded-sm"
+          src="@/assets/img/strawbs.jpg"
+        />
+      </div>
+      <div class="col-6 feat-card h-100">
+        <div class="content-wrap d-flex justify-content-start align-items-start flex-column">
+          <span class="w-100">View all Meat</span>
+          <p class="w-100">Straight from the butchers table and right onto your grill.</p>
+          <button class="btn btn-light">Shop now</button>
+        </div>
+        <img class="mw-100 h-100 w-100 object-fit-cover rounded-sm" src="@/assets/img/steak.jpg" />
+      </div>
+    </div>
+  </section>
+
+  <section id="productsSec" class="pagesec">
+    <div class="container-fluid row gy-5">
+      <div class="productsSec-popProducts"><h2 class="col">Popular Products</h2></div>
+      <ProductCard
+        v-for="product in allProducts"
+        :key="product.id"
+        :product="product"
+      ></ProductCard>
+    </div>
+  </section>
+</template>
+
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 
@@ -88,71 +153,6 @@ export default defineComponent({
   }
 })
 </script>
-
-<template>
-  <div class="carouselSec">
-    <div class="row">
-      <Carousel :autoplay="10000" :wrap-around="true" :itemsToShow="1">
-        <Slide v-for="image in images" :key="image.id">
-          <div class="carousel__item">
-            <div class="caro-div">
-              <img :src="image.url" />
-            </div>
-          </div>
-        </Slide>
-      </Carousel>
-    </div>
-  </div>
-
-  <section id="featuredCategories">
-    <div class="row gy-5">
-      <div class="productsSec-popProducts"><h2 class="col">Featured Categories</h2></div>
-      <CategoryCard
-        @click="pushToCategory(product.category.toLowerCase())"
-        v-for="product in productsInEachCategory"
-        :key="product.id"
-        :product="product"
-      ></CategoryCard>
-    </div>
-  </section>
-
-  <section>
-    <div class="row d-flex flex-row justify-content-between h-100 w-100 g-3">
-      <div class="col-6 feat-card h-100">
-        <div class="content-wrap d-flex justify-content-start align-items-start flex-column">
-          <span class="w-100">Find your Fresh Fruit</span>
-          <p class="w-100">
-            For the topping on your cake or for the grazers, view our fresh fruits now.
-          </p>
-          <button class="btn btn-light">Shop now</button>
-        </div>
-        <img
-          class="mw-100 h-100 object-fit-cover w-100 rounded-sm"
-          src="@/assets/img/strawbs.jpg"
-        />
-      </div>
-      <div class="col-6 feat-card h-100">
-        <div class="content-wrap d-flex justify-content-start align-items-start flex-column">
-          <span class="w-100">View all Meat</span>
-          <p class="w-100">Straight from the butchers table and right onto your grill.</p>
-          <button class="btn btn-light">Shop now</button>
-        </div>
-        <img class="mw-100 h-100 w-100 object-fit-cover rounded-sm" src="@/assets/img/steak.jpg" />
-      </div>
-    </div>
-  </section>
-
-  <section id="productsSec" class="pagesec">
-    <div class="container-fluid row gy-5">
-      <div class="productsSec-popProducts"><h2 class="col">Popular Products</h2></div>
-      <ProductCard
-        v-for="product in allProducts"
-        :key="product.id"
-        :product="product"
-      ></ProductCard>
-    </div>
-  </section>
-</template>
 
 <style>
 .caro-div {

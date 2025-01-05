@@ -194,7 +194,7 @@
               <div class="col-12">{{ product.product.description }}</div>
               <div class="col-12">£{{ product.product.price }}</div>
             </div>
-            <span class="badge text-bg-dark rounded-pill"> x {{ product.quantity }}</span>
+            <span class="badge text-bg-success rounded-pill"> x {{ product.quantity }}</span>
           </li>
         </ol>
       </div>
@@ -231,7 +231,13 @@
 
         <div class="mb-3">
           <label for="email">Email <span class="text-muted">(Optional)</span></label>
-          <input type="email" class="form-control" id="email" placeholder="you@example.com" />
+          <input
+            v-model="orderRequest.email"
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="you@example.com"
+          />
           <div class="invalid-feedback">
             Please enter a valid email address for shipping updates.
           </div>
@@ -337,7 +343,7 @@
           </div>
         </div>
         <button
-          class="mt-4 mb-4 btn btn-success btn-lg btn-block"
+          class="mt-4 mb-4 btn btn-green btn-lg btn-block"
           type="submit"
           @click="onSubmit($event)"
         >
@@ -371,6 +377,7 @@ export default defineComponent({
       address: '',
       address2: '',
       postcode: '',
+      email: '',
       paymentMethod: PaymentMethod.CreditCard,
       BasketItems: []
     }
@@ -445,7 +452,6 @@ export default defineComponent({
       helper.scrollToTop()
       this.orderStatus = 1
       this.store.emptyBasket()
-      this.$emitter.emit('display-alert', 'This is a test alert!')
     },
     getOrderTotalPrice(order: IOrderRequest): string {
       let sum = 0

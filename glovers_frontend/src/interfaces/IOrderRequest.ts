@@ -8,6 +8,7 @@ export default interface IOrderRequest {
   address: string
   address2: string
   postcode: string
+  email: string
   paymentMethod: PaymentMethod
   BasketItems: IBasketProduct[]
 }

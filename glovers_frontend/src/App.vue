@@ -13,13 +13,13 @@
       </div>
     </div>
     <div class="nav-wrap">
-      <NavBar @show-basket-event="toggleBasketSlideCallback"></NavBar>
+      <NavBar></NavBar>
     </div>
   </header>
   <main>
-    <BasketSlideOut @hide-basket-event="hideBasket" v-if="toggleBasketSlide"></BasketSlideOut>
+    <BasketSlideOut></BasketSlideOut>
     <div class="container">
-      <RouterView :toggleBasketSlideEvent="toggleBasketSlide" />
+      <RouterView />
     </div>
   </main>
   <footer class="d-flex w-100 flex-wrap justify-content-between align-items-center py-4">
@@ -69,11 +69,8 @@ export default defineComponent({
     }
   },
   methods: {
-    toggleBasketSlideCallback() {
-      this.toggleBasketSlide = !this.toggleBasketSlide
-    },
     hideBasket() {
-      this.toggleBasketSlide = false
+      this.$emitter.emit('show-basket-slide', false)
     },
     async populateProductsInStore() {
       let prods = await productsService.getAllProducts()
@@ -104,8 +101,8 @@ main {
 }
 
 .nav-wrap {
-  padding-left: 8%;
-  padding-right: 12%;
+  padding-left: 5%;
+  padding-right: 5%;
   top: 0;
   width: 100%;
   z-index: 999;

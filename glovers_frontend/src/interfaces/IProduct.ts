@@ -6,4 +6,5 @@ export default interface IProduct {
   description: string
   image: string
   nutritionImage: string
+  quantity: number
 }

@@ -109,7 +109,7 @@ export default defineComponent({
               <h4>£{{ product.price }}</h4>
             </div>
             <div class="col-10">
-              <button @click="saveProductToStore(product)" class="btn btn-success">Add to cart</button>
+              <button @click="saveProductToStore(product)" class="btn btn-green">Add to cart</button>
             </div>
           </div>
         </div>

@@ -6,19 +6,19 @@
           <img src="@/assets/img/green-go-logo.png" />
         </div>
         <SearchBar></SearchBar>
+        <div class="btn btn-lg btn-green" @click="pushToSignInOrBackToShop()">
+          {{ signInButtonText }}
+        </div>
         <div class="basket">
-          <button @click="$emit('showBasketEvent')">
+          <button @click="showBasketSlide(true)" class="d-flex align-items-center">
             <span :hidden="store.getBasketCount <= 0" class="count">{{
               store.getBasketCount
             }}</span>
-            <img src="@/assets/img/icons8-shopping-bag-50.png" />
+            <div class="d-flex align-items-center text-center justify-content-center">
+              <img src="@/assets/img/icons8-shopping-bag-50.png" />
+              <p class="px-3 fs-5 m-0 p-0">£{{ store.getSumTotal.toFixed(2) }}</p>
+            </div>
           </button>
-          <div
-            class="alert-wrap position-absolute px-2 pb-1 pt-1 bg-danger text-center d-flex align-items-center justify-content-center"
-            style="width: fit-content; left: 50%; transform: translateX(-50%); border-radius: 10px"
-          >
-            <p class="w-100 p-0 m-0" style="text-wrap: nowrap">{{ alertMessage }}</p>
-          </div>
         </div>
       </div>
     </div>
@@ -51,39 +51,47 @@ export default defineComponent({
   components: {
     SearchBar
   },
-  emits: {
-    showBasketEvent: null
-  },
   props: {},
   data() {
-    var alertMessage: string = 'TEST MESSAGE'
+    const signInButtonText = 'Sign in'
     const store = useBasketStore()
-    const showBasket: boolean = false
     return {
-      alertMessage,
-      showBasket,
-      store
+      store,
+      signInButtonText
     }
   },
   methods: {
     pushHome() {
       this.$router.push('/')
+    },
+    showBasketSlide(shouldShow: boolean) {
+      this.$emitter.emit('show-basket-slide', shouldShow)
+    },
+    pushToSignInOrBackToShop() {
+      if (this.isUserOnSignInPage()) {
+        this.$router.push('/')
+      } else {
+        this.$router.push('/sign-in')
+      }
+    },
+    isUserOnSignInPage() {
+      return this.$router.currentRoute.value.name == 'signin'
+    },
+    generateSignInButtonText() {
+      if (this.isUserOnSignInPage()) {
+        this.signInButtonText = 'Back to shop'
+      } else {
+        this.signInButtonText = 'Sign in'
+      }
     }
   },
   computed: {},
   watch: {
-    alertMessage() {
-      return this.alertMessage
+    async $route() {
+      this.generateSignInButtonText()
     }
   },
-  mounted() {
-    this.$emitter.on('display-alert', (message: any) => {
-      this.alertMessage = message
-      setTimeout(() => {
-        this.alertMessage = ''
-      }, 3000)
-    })
-  }
+  mounted() {}
 })
 </script>
 
@@ -112,25 +120,31 @@ export default defineComponent({
   margin: auto;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .basket {
-  position: absolute;
+  width: 120px;
+  justify-content: center;
+  align-items: center;
   right: 100px;
+  height: 50px;
+  display: flex;
 }
 
 .basket img {
+  position: relative;
   width: 25px;
   height: 25px;
   z-index: 10;
 }
 
 .basket .count {
-  top: 20px;
-  left: 70%;
+  top: 13px;
+  left: 30px;
   z-index: 11;
   display: flex;
-  position: absolute;
+  position: relative;
   justify-content: center;
   align-items: center;
   font-size: 12px;

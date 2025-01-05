@@ -13,7 +13,8 @@ export default class ProductsService implements IProductsService {
     category: '',
     description: '',
     image: '',
-    nutritionImage: ''
+    nutritionImage: '',
+    quantity: 0
   }
 
   private static defaultReviewResponse: IReview = {

@@ -27,17 +27,34 @@
             </span>
           </div>
         </div>
-        <div class="row mt-4">
-          <div @click="goToProductPage(product.id)" class="col-8 d-flex align-items-center">
+        <div class="row mt-4 d-flex justify-content-evenly align-items-center">
+          <div @click="goToProductPage(product.id)" class="col-3 d-flex align-items-center">
             <p class="d-flex justify-content-left align-items-center fs-5 font-weight-bold p-0 m-0">
               {{ '£' + product.price }}
             </p>
+          </div>
+          <div class="col-5 text-center d-flex justify-content-center align-items-center flex-row">
+            <button
+              @click="product.quantity -= 1"
+              class="amount__edit fs-5 d-flex align-items-center justify-content-center"
+            >
+              <span> - </span>
+            </button>
+            <div class="amount d-flex px-2 align-items-center justify-content-center fs-4">
+              {{ product.quantity ?? 0 }}
+            </div>
+            <button
+              @click="product.quantity += 1"
+              class="amount__edit fs-5 d-flex align-items-center justify-content-center"
+            >
+              <span> + </span>
+            </button>
           </div>
           <div class="col-4">
             <a
               href="javascript:void(0)"
               @click="saveProductToStore(product)"
-              class="d-flex w-100 align-items-center justify-content-between btn btn-success"
+              class="d-flex w-100 align-items-center justify-content-between btn btn-green"
               >Add <img src="@/assets/img/plus.png" width="19" height="19"
             /></a>
           </div>
@@ -64,7 +81,7 @@ export default defineComponent({
   },
   props: {
     product: {
-      type: Object as PropType<IProduct>,
+      type: Object as PropType<Product>,
       required: true
     }
   },
@@ -81,6 +98,7 @@ export default defineComponent({
   methods: {
     saveProductToStore(product: IProduct) {
       this.store.addProduct(this.product)
+      this.$emitter.emit('show-basket-slide', true)
     },
     trimProductTitleToFour(title: string): string {
       return title.split(' ').slice(0, 4).join(' ')
@@ -88,7 +106,7 @@ export default defineComponent({
     addScrollingTextClassToElements() {
       var cardTitles = document.getElementsByClassName('card-title')
       for (let i = 0; i < cardTitles.length; i++) {
-        let isTextOverflown = cardTitles[i].clientHeight + 5 < cardTitles[i].scrollHeight // add 5 to buffer, as font, line space can cause small issues
+        let isTextOverflown = cardTitles[i].clientHeight + 5 < cardTitles[i].scrollHeight
         if (isTextOverflown) {
           cardTitles[i].addEventListener('mouseenter', function (this: any) {
             this.style.transform = `translateY(-${cardTitles[i].scrollHeight - 15}px)`
@@ -141,6 +159,8 @@ export default defineComponent({
   computed: {},
   async mounted() {
     if (this.product) {
+      console.log(this.product)
+      console.log(this.product.quantity)
       await this.calculateAverageRating(this.product)
     }
 
@@ -150,6 +170,29 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.amount__edit {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.amount__edit:hover {
+  border: 1px solid rgba(0, 0, 0, 1);
+}
+
+.amount__edit span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.amount__edit span:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
 .card-title-box {
   padding: 5px 0px 5px 0px;
   height: 40px;

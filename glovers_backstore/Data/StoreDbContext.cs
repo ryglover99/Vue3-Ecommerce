@@ -1,10 +1,14 @@
-﻿using glovers_backstore.Data.Models;
+﻿using Duende.IdentityServer.EntityFramework.Options;
+using glovers_backstore.Data.Models;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Options;
 
 namespace glovers_backstore.Data
 {
-    public class StoreDbContext : DbContext
+    public class StoreDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         public DbSet<Product> Products { get; set; }
 
@@ -14,7 +18,7 @@ namespace glovers_backstore.Data
 
         public DbSet<OrderProductDetails> OrderProductDetails { get; set; }
 
-        public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options) { }
+        public StoreDbContext(DbContextOptions<StoreDbContext> options, IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,7 +57,7 @@ namespace glovers_backstore.Data
 
 
             #region Seed Initial Data
-            modelBuilder.Entity<Product>().HasData(
+                modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, Title = "Apple", Price = 0.99m, Category = "Fruit", Description = "Fresh red apple", Image = "pink_apple.jpg", NutritionImage = "apple.svg" },
                 new Product { Id = 2, Title = "Banana", Price = 0.59m, Category = "Fruit", Description = "Ripe yellow banana", Image = "bannana.jpg", NutritionImage = "banana.svg" },
                 new Product { Id = 3, Title = "Orange", Price = 1.19m, Category = "Fruit", Description = "Juicy orange", Image = "orange.jpg", NutritionImage = "orange.svg" },

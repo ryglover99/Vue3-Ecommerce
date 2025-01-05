@@ -5,7 +5,7 @@
         v-model="searchTerm"
         class="form-control me-2"
         type="search"
-        placeholder="Search products"
+        placeholder="Search for products..."
         aria-label="Search"
       />
     </form>
@@ -82,7 +82,7 @@ export default defineComponent({
 .search {
   flex: 1;
   position: relative;
-  max-width: 900px;
+  max-width: 800px;
   display: flex;
   align-items: center;
   height: 100%;
@@ -177,7 +177,6 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .form-control {

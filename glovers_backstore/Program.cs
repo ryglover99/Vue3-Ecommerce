@@ -5,15 +5,29 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using glovers_backstore.Business.Interfaces;
+using glovers_backstore.Data.Models;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+builder.Services.AddDbContext<StoreDbContext>(options =>
+{
+    options.UseSqlServer(@"Server=.\;Database=BackstoreDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+});
 
 
-builder.Services.AddControllers();
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<StoreDbContext>();
+
+builder.Services.AddIdentityServer()
+    .AddApiAuthorization<ApplicationUser, StoreDbContext>();
+
+builder.Services.AddAuthentication()
+    .AddIdentityServerJwt();
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,10 +42,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddDbContext<StoreDbContext>(options =>
-{
-    options.UseSqlServer(@"Server=.\;Database=BackstoreDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-});
 
 // DI
 builder.Services.AddScoped<IProductsService, ProductService>();
@@ -51,6 +61,8 @@ app.UseHttpsRedirection();
 
 app.UseCors();
 
+app.UseAuthentication();
+app.UseIdentityServer();
 app.UseAuthorization();
 
 app.MapControllers();

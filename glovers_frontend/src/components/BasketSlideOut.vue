@@ -1,11 +1,14 @@
 <template class="parent">
-  <div class="container d-flex flex-column shadow-lg">
+  <div
+    :class="toggleBasketSlide ? 'slide-in' : 'slide-out'"
+    class="container d-flex flex-column shadow-lg"
+  >
     <div class="row mb-4">
       <div class="col d-flex justify-content-start">
         <h2>My Cart</h2>
       </div>
       <div class="col d-flex justify-content-end">
-        <button @click="$emit('hideBasketEvent')">
+        <button @click="showBasketSlide(false)">
           <img src="@/assets/img/icons8-x-50.png" />
         </button>
       </div>
@@ -33,16 +36,39 @@
             <div class="col-12">{{ product.product.description }}</div>
             <div class="col-12">£{{ product.product.price }}</div>
           </div>
-          <span class="badge text-bg-dark rounded-pill"> x {{ product.quantity }}</span>
+          <span class="badge text-bg-success rounded-pill"> x {{ product.quantity }}</span>
         </li>
       </ol>
     </div>
     <hr :hidden="store.getBasketCount <= 0" />
     <span :hidden="store.getBasketCount <= 0" class="text-end fs-5">Total: £{{ sumTotal() }}</span>
     <div class="row mt-auto d-flex">
-      <div class="col-12 d-flex justify-content-end">
-        <div :hidden="store.getBasketCount <= 0" @click="pushToCheckout()" class="btn btn-success">
-          Go to checkout
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <div
+          @click="showBasketSlide(false)"
+          class="btn btn-secondary btn-lg d-flex align-items-center"
+        >
+          <img
+            width="20"
+            height="20"
+            src="https://img.icons8.com/ios-filled/50/FFFFFF/back.png"
+            alt="back"
+          />
+          <p class="p-0 m-0 px-1">Continue shopping</p>
+        </div>
+
+        <div
+          @click="pushToCheckout()"
+          class="btn btn-lg btn-green d-flex align-items-center"
+          :class="store.getBasketCount <= 0 ? 'disabled' : ''"
+        >
+          <p class="p-0 m-0 px-1">Go to checkout</p>
+          <img
+            width="20"
+            height="20"
+            src="https://img.icons8.com/ios-filled/50/FFFFFF/forward--v1.png"
+            alt="forward--v1"
+          />
         </div>
       </div>
     </div>
@@ -55,18 +81,13 @@ import type IProduct from '@/interfaces/IProduct'
 import { useBasketStore } from '@/store/BasketStore'
 
 export default defineComponent({
-  setup() {
-    const store = useBasketStore()
-    return { store }
-  },
-  emits: {
-    hideBasketEvent: null
-  },
   props: {
     listOfProducts: Array as PropType<IProduct[]>
   },
   data() {
-    return {}
+    var toggleBasketSlide: boolean = false
+    const store = useBasketStore()
+    return { store, toggleBasketSlide }
   },
   methods: {
     getAllBasketProducts() {
@@ -77,16 +98,30 @@ export default defineComponent({
     },
     sumTotal() {
       return this.store.getSumTotal
+    },
+    showBasketSlide(shouldShow: boolean) {
+      this.$emitter.emit('show-basket-slide', shouldShow)
+    },
+    listenForBasketSlideEvent() {
+      this.$emitter.on('show-basket-slide', (shouldShow: boolean) => {
+        this.toggleBasketSlide = shouldShow
+      })
     }
   },
   computed: {},
-  mounted() {}
+  mounted() {
+    this.listenForBasketSlideEvent()
+  }
 })
 </script>
 
 <style scoped>
-.parent {
-  transition: display 5s;
+.slide-in {
+  right: 0;
+}
+
+.slide-out {
+  right: -100%;
 }
 
 .productsWrap {
@@ -108,10 +143,10 @@ hr {
   height: 100%;
   width: 35vw;
   position: fixed;
-  right: 0;
   top: 0;
   margin: 0;
   background-color: white;
+  transition: right 0.3s ease-in-out;
 }
 
 .alerting {
