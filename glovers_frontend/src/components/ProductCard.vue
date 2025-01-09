@@ -81,7 +81,7 @@ export default defineComponent({
   },
   props: {
     product: {
-      type: Object as PropType<Product>,
+      type: Object as PropType<IProduct>,
       required: true
     }
   },
@@ -158,6 +158,7 @@ export default defineComponent({
   },
   computed: {},
   async mounted() {
+    console.log('MOUNTED')
     if (this.product) {
       console.log(this.product)
       console.log(this.product.quantity)

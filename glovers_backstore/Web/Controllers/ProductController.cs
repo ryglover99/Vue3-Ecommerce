@@ -12,7 +12,6 @@ namespace glovers_backstore.Controllers
     public class ProductController : ControllerBase
     {
         /* TODO: 
-         * Return HTTP responses
          * Use standardised REST methods, PUT GET DELETE
          * Logging
          * JWT Auth

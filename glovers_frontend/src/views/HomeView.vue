@@ -16,7 +16,16 @@
   <section id="featuredCategories">
     <div class="row gy-5">
       <div class="productsSec-popProducts"><h2 class="col">Featured Categories</h2></div>
+      <div class="d-flex col-3" v-if="productsInEachCategory.length <= 0" v-for="n in 8">
+        <div class="product-card loading">
+          <div class="wiper"></div>
+          <div class="image center-flex">
+            <div src="" alt=""></div>
+          </div>
+        </div>
+      </div>
       <CategoryCard
+        v-else
         @click="pushToCategory(product.category.toLowerCase())"
         v-for="product in productsInEachCategory"
         :key="product.id"
@@ -54,7 +63,20 @@
   <section id="productsSec" class="pagesec">
     <div class="container-fluid row gy-5">
       <div class="productsSec-popProducts"><h2 class="col">Popular Products</h2></div>
+      <div class="d-flex col-3" v-if="allProducts.length <= 0" v-for="n in 12">
+        <div class="product-card loading">
+          <div class="wiper"></div>
+          <div class="image center-flex">
+            <div src="" alt=""></div>
+          </div>
+          <div class="name">xxxxxxxxxxxxxxxxxxx</div>
+          <div class="prices">
+            <span class="price"> xxxxxxxx </span>
+          </div>
+        </div>
+      </div>
       <ProductCard
+        v-else
         v-for="product in allProducts"
         :key="product.id"
         :product="product"
@@ -292,5 +314,74 @@ export default defineComponent({
 
 .productsSec-popProducts {
   margin-left: 10px;
+}
+
+/* Product skeleton loader */
+
+.product-card {
+  background: white;
+  padding: 20px;
+  width: 250px;
+  color: #3e4d5c;
+}
+
+.product-card.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading .image div {
+  height: 250px;
+  width: 100%;
+  background: #ccc;
+  border-radius: 5px;
+}
+
+.loading .image,
+.loading .name,
+.loading .price {
+  z-index: 2;
+}
+.loading .name {
+  margin: 16px 0;
+
+  background: #ccc;
+  border-radius: 5px;
+  color: #ccc;
+}
+
+.loading .price {
+  background: #ccc;
+  border-radius: 5px;
+
+  color: #ccc;
+  font:
+    16px Roboto,
+    sans-serif;
+  font-weight: normal;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+}
+
+.wiper {
+  background-blend-mode: multiply;
+  background: linear-gradient(90deg, #0000 0%, white 45%, white 55%, #0000 100%);
+  width: 60px;
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  left: -30px;
+  top: 0;
+  animation: 1.5s wipe linear infinite;
+}
+
+@keyframes wipe {
+  0% {
+    left: -30px;
+  }
+
+  100% {
+    left: calc(100% + 30px);
+  }
 }
 </style>
